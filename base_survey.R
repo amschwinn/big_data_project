@@ -14,9 +14,10 @@
 
 
 library(readr)
+library(hashmap)
 
 #Specify directory
-dir <- 'D:/GD/MLDM/Big Data/Project/big_data_project_confidential/'
+dir <- 'Programming/BD_PROJECT/big_data_project_confidential/'
 
 #Load files
 B_Actions_rattachees_demandes <- read_csv2(paste(dir,"BASE_Actions_rattachees_demandes.csv",sep = ''))
@@ -52,6 +53,28 @@ surveys <- list(S_AUTO_BDG,S_AUTO_CLASSIQUE,S_AUTO_CLASSIQUE_TMA,S_AUTOPRESTO,S_
              S_OPTIQUE_PARTENAIR,S_RECLAMATION,S_RESILIATION,S_SOUSCRIPTION,S_SUIVI_PROACTIF)
 
 
+Average_Satisfaction <- hashmap(c(0),c(0))  #  (key = user id, value = average satisfaction)
+num_surveys <- hashmap(c(0),c(0))           # (key = user id, value = num of surveys processed)
+Average_Satisfaction$clear()
+num_surveys$clear()
 
+for (table in surveys){
+  print(table)
+  x <- nrow(table)
+  for (i in seq.int(from=2, to=x)){
+    key <- as.numeric(table[i,'Meta_donnee 3'])
+    if (Average_Satisfaction$has_key(key)){
+      avg <- Average_Satisfaction[[key]]
+      num <- num_surveys[[key]]
+      new_avg <- ((avg * num) + as.numeric(table[i,'Q1'])) / (num + 1)
+      Average_Satisfaction[[key]] <- new_avg
+      num_surveys[[key]] <- num + 1
+    }else{
+      Average_Satisfaction[[key]] <- as.numeric(table[i,'Q1'])
+      num_surveys[[key]] <- 1
+    }
+  }
+}
 
+print(Average_Satisfaction[[601283]])
 
