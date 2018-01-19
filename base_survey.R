@@ -1,0 +1,31 @@
+library(readr)
+BASE_Actions_rattachees_demandes <- read_csv2("Documents/big_data_project_confidential/BASE_Actions_rattachees_demandes.csv")
+BASE_Avantages_clients <- read_csv2("Documents/big_data_project_confidential/BASE_Avantages_clients.csv")
+BASE_Demandes_clients_hors <- read_csv2("Documents/big_data_project_confidential/BASE_Donnees_clients_hors_reclamations.csv")
+BASE_Donnes_clients <- read_csv2("Documents/big_data_project_confidential/BASE_Donnees_Clients.csv")
+BASE_Reclamations_clients <- read_csv2("Documents/big_data_project_confidential/BASE_Reclamations_clients.csv")
+BASE_Structure_Commerciale <- read_csv2("Documents/big_data_project_confidential/BASE_Structure_Commerciale.csv")
+
+SATISFACTION_AUTO_BDG_2015_2016_2017 <- read_csv2("Documents/big_data_project_confidential/SATISFACTION_AUTO_BDG_2015_2016_2017.csv")
+SATISFACTION_AUTO_CLASSIQUE_2015_2016_2017 <- read_csv2("Documents/big_data_project_confidential/SATISFACTION_AUTO_CLASSIQUE_2015_2016_2017.csv")
+SATISFACTION_AUTO_CLASSIQUE_TMA_2016_2017 <- read_csv2("Documents/big_data_project_confidential/SATISFACTION_AUTO_CLASSIQUE_TMA_2016_2017.csv")
+SATISFACTION_AUTOPRESTO_2015_2016_2017 <- read_csv2("Documents/big_data_project_confidential/SATISFACTION_AUTOPRESTO_2015_2016_2017.csv")
+SATISFACTION_AUTO_TMA_BDG_2016_2017 <- read_csv2("Documents/big_data_project_confidential/SATISFACTION_AUTO_TMA_BDG_2016_2017.csv")
+SATISFACTION_DAB_2015_2016_2107 <- read_csv2("Documents/big_data_project_confidential/SATISFACTION_DAB_2015_2016_2107.csv")
+SATISFACTION_DEMANDE_2015_2016_2017 <- read_csv2("Documents/big_data_project_confidential/SATISFACTION_DEMANDE_2015_2016_2017.csv")
+SATISFACTION_DENTAIRE_NON_PARTENAIRE_2015_2016_2017 <- read_csv2("Documents/big_data_project_confidential/SATISFACTION_DENTAIRE_NON_PARTENAIRE_2015_2016_2017")
+SATISFACTION_DENTAIRE_PARTENAIRE_2015_2016_2017 <- read_csv2("Documents/big_data_project_confidential/SATISFACTION_DENTAIRE_PARTENAIRE_2015_2016_2017.csv")
+SATISFACTION_MODIFICATION_2015_2016_2017 <- read_csv2("Documents/big_data_project_confidential/SATISFACTION_MODIFICATION_2015_2016_2017.csv")
+SATISFACTION_OPTIQUE_NON_PARTENAIRE_2015_2016_2017 <- read_csv2("Documents/big_data_project_confidential/SATISFACTION_OPTIQUE_NON_PARTENAIRE_2015_2016_2017.csv")
+SATISFACTION_OPTIQUE_PARTENAIRE_2015_2016_2017 <- read_csv2("Documents/big_data_project_confidential/SATISFACTION_OPTIQUE_PARTENAIRE_2015_2016_2017.csv")
+SATISFACTION_RECLAMATION_2015_2016_2107 <- read_csv2("Documents/big_data_project_confidential/SATISFACTION_RECLAMATION_2015_2016_2107.csv")
+SATISFACTION_RESILIATION_2015_2016_2017 <- read_csv2("Documents/big_data_project_confidential/SATISFACTION_RESILIATION_2015_2016_2017.csv")
+SATISFACTION_SOUSCRIPTION_2015_2016_2017 <- read_csv2("Documents/big_data_project_confidential/SATISFACTION_SOUSCRIPTION_2015_2016_2017.csv")
+SATISFACTION_SUIVI_PROACTIF_2016_2017 <- read_csv2("Documents/big_data_project_confidential/SATISFACTION_SUIVI_PROACTIF_2016_2017.csv")
+
+#---------------------------------------------------#
+
+
+
+
+
