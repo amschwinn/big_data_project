@@ -12,11 +12,11 @@ for (i in seq.int(from=2, to=x)){
   if (Average_Satisfaction$has_key(key)){
     avg <- Average_Satisfaction[[key]]
     num <- num_surveys[[key]]
-    new_avg <- ((avg * num) + as.numeric(SATISFACTION_AUTO_BDG_2015_2016_2017[i,'Q1'])) / (num + 1)
+    new_avg <- ((avg * num) + as.numeric(SATISFACTION_AUTO_BDG_2015_2016_2017[i,1])) / (num + 1)
     Average_Satisfaction[[key]] <- new_avg
     num_surveys[[key]] <- num + 1
   }else{
-    Average_Satisfaction[[key]] <- as.numeric(SATISFACTION_AUTO_BDG_2015_2016_2017[i,'Q1'])
+    Average_Satisfaction[[key]] <- as.numeric(SATISFACTION_AUTO_BDG_2015_2016_2017[i,1])
     num_surveys[[key]] <- 1
   }
 }
