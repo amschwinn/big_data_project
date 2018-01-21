@@ -36,14 +36,14 @@ library(arules)
 #Load files
 dir <- 'D:/GD/MLDM/Big Data/Project/big_data_project_confidential/'
 
-B_Donnes_clients <- read_csv2(paste(dir,"BASE_Donnees_Clients.csv",sep = ''))
+B_Donnes_clients <- read_csv2(paste(dir,"BASE_Donnees_Clients.csv", sep= ''))
 B_Reclamations_clients <- read_csv2(paste(dir,"BASE_Reclamations_clients.csv",sep = ''))
 B_Structure_Commerciale <- read_csv2(paste(dir,"BASE_Structure_Commerciale.csv",sep = ''))
 B_Actions_rattachees_demandes <- read_csv2(paste(dir,"BASE_Actions_rattachees_demandes.csv",sep = ''))
 B_Avantages_clients <- read_csv2(paste(dir,"BASE_Avantages_clients.csv",sep = ''))
 
 
-S_AUTO_BDG <- read_csv2(paste(dir,"SATISFACTION_AUTO_BDG_2015_2016_2017.csv",sep = ''))
+S_AUTO_BDG <- read_csv2(paste(dir,"SATISFACTION_AUTO_BDG_2015_2016_2017.csv", sep= ''))
 S_AUTO_CLASSIQUE <- read_csv2(paste(dir,"SATISFACTION_AUTO_CLASSIQUE_2015_2016_2017.csv",sep = ''))
 S_AUTO_CLASSIQUE_TMA <- read_csv2(paste(dir,"SATISFACTION_AUTO_CLASSIQUE_TMA_2016_2017.csv",sep = ''))
 S_AUTOPRESTO <- read_csv2(paste(dir,"SATISFACTION_AUTOPRESTO_2015_2016_2017.csv",sep = ''))
@@ -61,7 +61,7 @@ S_SOUSCRIPTION <- read_csv2(paste(dir,"SATISFACTION_SOUSCRIPTION_2015_2016_2017.
 S_SUIVI_PROACTIF <- read_csv2(paste(dir,"SATISFACTION_SUIVI_PROACTIF_2016_2017.csv",sep = ''))
 
 survey <- rbind(S_RECLAMATION[2:nrow(S_RECLAMATION),c('Q1','Meta_donnee 3')],
-                  S_AUTO_BDG[2:nrow(S_AUTO_BDG),c('Q1','Meta_donnee 3')])
+                S_AUTO_BDG[2:nrow(S_AUTO_BDG),c('Q1','Meta_donnee 3')])
 survey <- rbind(survey,S_AUTO_CLASSIQUE[2:nrow(S_AUTO_CLASSIQUE),c('Q1','Meta_donnee 3')])
 survey <- rbind(survey,S_AUTO_CLASSIQUE_TMA[2:nrow(S_AUTO_CLASSIQUE_TMA),c('Q1','Meta_donnee 3')])
 survey <- rbind(survey, S_AUTOPRESTO[2:nrow(S_AUTOPRESTO),c('Q1','Meta_donnee 3')])
@@ -83,11 +83,11 @@ for(i in 1:nrow(survey)){
   if(survey$Q1[i] >= 7){
     survey$Q2[i] = 'High'
   } else {
-  if(survey$Q1[i] >= 4){
-    survey$Q2[i] = 'Med'
-  }else{
-    survey$Q2[i] = 'Low'
-  }}
+    if(survey$Q1[i] >= 4){
+      survey$Q2[i] = 'Med'
+    }else{
+      survey$Q2[i] = 'Low'
+    }}
 }
 survey <- survey[,c('Q2','Meta_donnee 3')]
 colnames(survey) <- c('Survey_rank','ID_GRC')
@@ -102,7 +102,7 @@ tot_info <- B_Donnes_clients[,c('ID_GRC','TRANCHE_AGE','SEXE','NATURE_PERSONNE',
 colnames(B_Structure_Commerciale)[1] <- 'CD_COMMERCIAL_CHARGE'
 #filter non useful examples
 B_Structure_Commerciale <- B_Structure_Commerciale[
-                            B_Structure_Commerciale$SECTEUR_COMMERCIAL != 'HORS RESEAU',]
+  B_Structure_Commerciale$SECTEUR_COMMERCIAL != 'HORS RESEAU',]
 #only keep cols we care about
 B_Structure_Commerciale <- B_Structure_Commerciale[,-2]
 #Join together
@@ -169,8 +169,8 @@ apr_ready$id <- as.numeric(apr_ready$id)
 apr_ready <- distinct(apr_ready)
 #Concate attributes by cust id
 apr_ready <- ddply(apr_ready,c('id'),
-        function(apr_ready)paste(apr_ready$att,
-                           collapse = ','))
+                   function(apr_ready)paste(apr_ready$att,
+                                            collapse = ','))
 #Remove id column
 apr_ready$id <- NULL
 colnames(apr_ready) <- c('itemList')
@@ -210,6 +210,12 @@ library(cluster)
 #Load complaints into corpus
 complaints <- Corpus(VectorSource(B_Reclamations_clients$COMMENTAIRE_DEMANDE))
 
+#Check encoding
+for (cmp in 1:length(complaints)) {
+  utf8::utf8_format(complaints[[cmp]][["content"]])
+  Encoding(complaints[[cmp]][["content"]]) <- "UTF-8"
+}
+
 #Remove whitespace
 complaints <- tm_map(complaints,stripWhitespace)
 writeLines(as.character(complaints[[1]]))
@@ -219,8 +225,8 @@ complaints <- tm_map(complaints,removeWords,stopwords("french"))
 writeLines(as.character(complaints[[1]]))
 
 #Stem to roots words
-complaints <- tm_map(complaints,stemDocument)
-writeLines(as.character(complaints[[1]]))
+#complaints <- tm_map(complaints,stemDocument)
+#writeLines(as.character(complaints[[1]]))
 
 #Convert all to lower case
 complaints <- tm_map(complaints, content_transformer(tolower))
@@ -239,8 +245,8 @@ dtm <- DocumentTermMatrix(complaints)
 inspect(dtm)
 
 #Remove sparce terms
-dtm <- removeSparseTerms(dtm,0.4)
-inspect(dtm)
+dtm <- removeSparseTerms(dtm,0.99)
+#inspect(dtm)
 
 #Transform from term doc matrix to plain text matrix
 dtm_mat <- as.matrix(dtm)
@@ -277,7 +283,9 @@ wordcloud(names(freq),freq,max.words=15)
 findFreqTerms(dtm,5)
 
 #Find words having a correlation rate higher of equal to .5
-findAssocs(dtm,0.5)
+c_names <- colnames(dtm)
+c_values <- rep(0.5, length(c_names))
+findAssocs(dtm,c_names,c_values)
 
 #Clustering of terms
 #heirachial clustering
