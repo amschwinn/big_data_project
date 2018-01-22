@@ -280,7 +280,7 @@ plot(income_reg)
 # Q 3.3)
 #############################################
 #Load files
-dir <- 'D:/GD/MLDM/Big Data/Project/big_data_project_confidential/'
+dir <- 'Programming/BD_PROJECT/big_data_project_confidential/'
 
 B_Donnes_clients <- read_csv2(paste(dir,"BASE_Donnees_Clients.csv",sep = ''))
 B_Avantages_clients <- read_csv2(paste(dir,"BASE_Avantages_clients.csv",sep = ''))
@@ -319,7 +319,7 @@ survey <- rbind(survey,S_SUIVI_PROACTIF[2:nrow(S_SUIVI_PROACTIF),c('Q1','Meta_do
 
 #Split survey scores into ranks
 survey[,'Q2'] <- survey$Q1
-survey <- drop_na(survey,'Q1')
+survey <- drop_na(survey,1)
 for(i in 1:nrow(survey)){
   check <- i
   if(survey$Q1[i] >= 7){
@@ -331,17 +331,18 @@ for(i in 1:nrow(survey)){
       survey$Q2[i] = 'Low'
     }}
 }
-survey <- survey[,c('Q1','Meta_donnee 3')]
+survey <- survey[,c('Q2','Meta_donnee 3')]
 colnames(survey) <- c('Survey_rank','ID_GRC')
 
 
 #Combine advantage into
-B_Avantages_clients <- B_Avantages_clients[,c('ID_GRC','CODE_AVG')]
+B_Avantages_clients <- B_Avantages_clients[,1:2]
 colnames(B_Avantages_clients) <- c('ID_GRC','advantage')
 tot_info <- merge(x=B_Avantages_clients, y=survey, by='ID_GRC', all=TRUE)
 tot_info$ID_GRC <- NULL
+tot_info <- drop_na(tot_info)
 
-#Runa decision tree to look from advantages to survey reults
+#Run a decision tree to look from advantages to survey reults
 adv_tree <- rpart(Survey_rank ~ .,
                   method="class", data=tot_info)
 # display the results
