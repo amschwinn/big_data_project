@@ -122,7 +122,7 @@ for(i in 1:nrow(survey)){
   if(survey$Q1[i] >= 7){
     survey$Q2[i] = 'High'
   } else {
-    if(survey$Q1[i] >= 4){
+    if((survey$Q1[i] >= 4) & (survey$Q1[i] < 7)){
       survey$Q2[i] = 'Med'
     }else{
       survey$Q2[i] = 'Low'
